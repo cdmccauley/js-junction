@@ -35,6 +35,7 @@ class App extends Component {
     this.state = {
       user: null,
       uid: null,
+      userDocs: null,
     };
   }
 
@@ -42,7 +43,8 @@ class App extends Component {
     // setup auth observer
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        firebaseDb.collection('users').add({ uid: user.uid }).then((docRef) => console.log('document written with id: ', docRef.id)).catch((err) => console.log(err));
+        firebaseDb.collection(`${user.uid}`).add({ seen: new Date()}).catch((err) => console.log(err));
+        //firebaseDb.collection('users').add({ uid: user.uid }).then((docRef) => console.log('document written with id: ', docRef.id)).catch((err) => console.log(err));
         this.setState((state, props) => {
           return {
             user: user,
@@ -53,6 +55,15 @@ class App extends Component {
         // ??
       };
       console.log('this.state.user:\n', this.state.user);
+      /////////////////////////////////////////////////////////////////
+      firebaseDb.collection('users').get().then((querySnapshot) => {
+        this.setState((state, props) => { 
+          return { 
+            userDocs: querySnapshot.docs
+          };
+        }, () => console.log(this.state.userDocs));
+      });
+      ////////////////////////////////////////////////////////////////
     });
     // login user anonymously
     firebase.auth().signInAnonymously().catch((err) => console.log(err));
