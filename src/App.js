@@ -43,7 +43,7 @@ class App extends Component {
     // setup auth observer
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        firebaseDb.collection(`${user.uid}`).add({ seen: new Date()}).catch((err) => console.log(err));
+        firebaseDb.collection(`${ user.uid }`).add({ seen: new Date()}).catch((err) => console.log(err));
         //firebaseDb.collection('users').add({ uid: user.uid }).then((docRef) => console.log('document written with id: ', docRef.id)).catch((err) => console.log(err));
         this.setState((state, props) => {
           return {
@@ -56,10 +56,10 @@ class App extends Component {
       };
       console.log('this.state.user:\n', this.state.user);
       /////////////////////////////////////////////////////////////////
-      firebaseDb.collection('users').get().then((querySnapshot) => {
+      firebaseDb.collection(`${ user.uid }`).get().then((querySnapshot) => {
         this.setState((state, props) => { 
           return { 
-            userDocs: querySnapshot.docs
+            userDocs: querySnapshot
           };
         }, () => console.log(this.state.userDocs));
       });
