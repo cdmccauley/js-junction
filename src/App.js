@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 // dev firebase import
 import firebase from 'firebase';
 
@@ -26,6 +28,32 @@ let firebaseDb;
 firebase.initializeApp(firebaseAppConfig);
 firebaseDb = firebase.firestore();
 firebaseDb.settings(firebaseDbConfig);
+
+const Home = () => {
+  return (
+    <React.Fragment>
+      <p>Home</p>
+      <a href='/host' >Host</a>
+      <a href='/client' >Join</a>
+    </React.Fragment>
+  );
+}
+
+const Host = () => {
+  return (
+  <React.Fragment>
+    <p>Host</p>
+  </React.Fragment>
+  );
+}
+
+const Client = () => {
+  return (
+    <React.Fragment>
+      <p>Join</p>
+    </React.Fragment>
+  )
+}
 
 class App extends Component {
 
@@ -73,7 +101,14 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <p>{ this.state.uid }</p>
+        <p>js-junction</p>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/' component={ Home } />
+            <Route path='/host' component={ Host } />
+            <Route path='/client' component={ Client } />
+          </Switch>
+        </BrowserRouter>
       </React.Fragment>
     );
   }
