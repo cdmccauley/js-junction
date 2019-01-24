@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 // dev firebase import
 import firebase from 'firebase';
@@ -33,8 +33,8 @@ const Home = () => {
   return (
     <React.Fragment>
       <p>Home</p>
-      <a href='/host' >Host</a>
-      <a href='/client' >Join</a>
+      <Link to='/host'>Host</Link>
+      <Link to='/client'>Join</Link>
     </React.Fragment>
   );
 }
@@ -65,6 +65,10 @@ class App extends Component {
       uid: null,
       userDocs: null,
     };
+  }
+
+  componentWillMount() {
+    
   }
 
   componentDidMount() {
